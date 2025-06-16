@@ -3,9 +3,11 @@ package goormthonUniv.MJU.server.Article.controller;
 
 import goormthonUniv.MJU.server.Article.controller.dto.ArticleRequest;
 import goormthonUniv.MJU.server.Article.controller.dto.ArticleResponse;
+import goormthonUniv.MJU.server.Article.controller.dto.ArticleResponses;
 import goormthonUniv.MJU.server.Article.domain.Article;
 import goormthonUniv.MJU.server.Article.domain.Image;
 import goormthonUniv.MJU.server.Article.service.ArticleService;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +49,29 @@ public class ArticleController {
                 article.getContent(),
                 imagePaths
         ));
+    }
+
+    @GetMapping("/articles")
+    public ResponseEntity<ArticleResponses> getAllArticles() {
+        List<Article> articles = articleService.findAllArticles();
+
+        List<ArticleResponse> articleResponses = articles.stream()
+                .map(article -> {
+                    List<Image> images = article.getImages();
+                    List<String> imagePaths = new ArrayList<>();
+
+                    if (images != null && !images.isEmpty()) {
+                        imagePaths.add(images.get(0).getStoredPath()); // 이미지 한 장만 가져옴
+                    }
+
+                    return new ArticleResponse(
+                            article.getId(),
+                            article.getTitle(),
+                            article.getContent(),
+                            imagePaths
+                    );
+                }).toList();
+
+        return ResponseEntity.ok(new ArticleResponses(articleResponses));
     }
 }

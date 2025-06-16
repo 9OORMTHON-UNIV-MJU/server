@@ -39,4 +39,9 @@ public class ArticleService {
         return articleRepository.findById(articleId)
                 .orElseThrow(() -> new ArticleException(ArticleErrorCode.NOT_FOUND_ARTICLE));
     }
+
+    @Transactional(readOnly = true)
+    public List<Article> findAllArticles() {
+        return articleRepository.findAll();
+    }
 }
