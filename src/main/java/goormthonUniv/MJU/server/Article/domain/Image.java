@@ -9,10 +9,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Image {
 
     @Id
@@ -29,9 +31,10 @@ public class Image {
     @JoinColumn(name = "article_id")
     private Article article;
 
-    public Image(String originalName, String storedPath) {
+    public Image(String originalName, String storedPath, Article article) {
         this.originalName = originalName;
         this.storedPath = storedPath;
+        this.article = article;
     }
 }
 

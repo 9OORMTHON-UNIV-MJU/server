@@ -1,5 +1,7 @@
 package goormthonUniv.MJU.server.global.exception;
 
+import goormthonUniv.MJU.server.Article.exception.ArticleErrorCode;
+import goormthonUniv.MJU.server.Article.exception.ArticleException;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -28,6 +30,16 @@ public class ErrorResponse {
                 .status(code.getStatus())
                 .code(code.name())
                 .message(code.getMessage())
+                .occurredAt(exception.getOccurredAt())
+                .build();
+    }
+
+    public static ErrorResponse of(ArticleException exception) {
+        ArticleErrorCode errorCode = exception.getErrorCode();
+        return ErrorResponse.builder()
+                .status(errorCode.getStatus())
+                .code(errorCode.name())
+                .message(errorCode.getMessage())
                 .occurredAt(exception.getOccurredAt())
                 .build();
     }
