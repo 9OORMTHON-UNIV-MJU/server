@@ -19,6 +19,12 @@ public class MemberController {
 
 	private final MemberService memberService;
 	
+	@PostMapping("/register")
+	public ResponseEntity<Void> register(@RequestBody RegisterRequest request) {
+		memberService.register(request);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+	
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
 		LoginResponse response = memberService.login(request);
