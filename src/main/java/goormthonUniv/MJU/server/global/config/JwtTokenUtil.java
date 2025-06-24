@@ -12,12 +12,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 
 @Component
-@RequiredArgsConstructor
-public class JwtTokenProvider {
-	
+public class JwtTokenUtil {
+
 	@Value("${jwt.secret}")
 	private String key;
 	private Key secretKey;
@@ -30,12 +28,12 @@ public class JwtTokenProvider {
 		this.secretKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(key));
 	}
 	
-	// AccessToken 생성 (닉네임 + 역할 포함)
-	public String generateAccessToken(Long memberId, String role) {
-        return generateToken(memberId, role, accessTokenValidTime);
-    }
-
-    // 토큰 생성
+    // AccessToken 생성 (닉네임 + 역할 포함)
+ 	public String generateAccessToken(Long memberId, String role) {
+         return generateToken(memberId, role, accessTokenValidTime);
+     }
+    
+ 	// 토큰 생성
     private String generateToken(Long memberId, String role, long expireTime) {
     	Claims claims = Jwts.claims().setSubject(String.valueOf(memberId));
         if (role != null && !role.isEmpty()) {
@@ -50,8 +48,8 @@ public class JwtTokenProvider {
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
-	
-	// 토큰에서 memberId 추출
+    
+ // 토큰에서 memberId 추출
     public Long getMemberId(String token) {
         try {
             Claims claims = getAllClaims(token);
@@ -90,5 +88,13 @@ public class JwtTokenProvider {
             return false;
         }
     }
-
+    
+    // 토큰 리졸브
+    public String resolveToken(String bearerToken) {
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
+   
 }
