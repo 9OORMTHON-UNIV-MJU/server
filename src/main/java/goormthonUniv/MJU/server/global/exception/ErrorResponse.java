@@ -5,6 +5,8 @@ import lombok.Getter;
 
 import java.time.Instant;
 
+import goormthonUniv.MJU.server.member.exception.CustomLoginException;
+
 @Builder
 @Getter
 public class ErrorResponse {

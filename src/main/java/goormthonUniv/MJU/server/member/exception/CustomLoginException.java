@@ -1,7 +1,9 @@
-package goormthonUniv.MJU.server.global.exception;
+package goormthonUniv.MJU.server.member.exception;
 
 import lombok.Getter;
 import java.time.Instant;
+
+import goormthonUniv.MJU.server.global.exception.ExceptionCode;
 
 @Getter
 public class CustomLoginException extends RuntimeException {

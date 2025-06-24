@@ -1,7 +1,8 @@
-package goormthonUniv.MJU.server.global.exception;
+package goormthonUniv.MJU.server.member.exception;
 
 import java.time.Instant;
 
+import goormthonUniv.MJU.server.global.exception.ExceptionCode;
 import lombok.Getter;
 
 @Getter
