@@ -9,8 +9,8 @@ import lombok.Getter;
 @Builder
 public class LoginResponse {
 
-	private String accessToken;
+	private Long memberId;
 	private String nickname;
-	private String role;
+	private String accessToken;
 	
 }
