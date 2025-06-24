@@ -1,5 +1,6 @@
 package goormthonUniv.MJU.server.global.exception;
 
+import goormthonUniv.MJU.server.Article.exception.ArticleException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomLoginException.class)
     public ResponseEntity<ErrorResponse> handleCustomExceptions(CustomLoginException exception){
+        ErrorResponse response = ErrorResponse.of(exception);
+        return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
+    }
+
+    @ExceptionHandler(ArticleException.class)
+    public ResponseEntity<ErrorResponse> handleArticleExceptions(ArticleException exception){
         ErrorResponse response = ErrorResponse.of(exception);
         return new ResponseEntity<>(response, HttpStatus.valueOf(response.getStatus()));
     }
