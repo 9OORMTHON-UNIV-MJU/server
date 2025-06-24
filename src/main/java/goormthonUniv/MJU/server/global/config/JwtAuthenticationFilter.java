@@ -33,17 +33,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		String token = resolveToken(request);
 		
 		// 유효성 검사
-        if (token != null && jwtTokenProvider.getNickname(token) != null && jwtTokenProvider.getRole(token) != null) {
+        if (token != null && jwtTokenProvider.getMemberId(token) != null && jwtTokenProvider.getRole(token) != null) {
             if (jwtTokenProvider.validateToken(token)) {
 
                 // 사용자 정보 추출
-                String nickname = jwtTokenProvider.getNickname(token);
+                Long memberId = jwtTokenProvider.getMemberId(token);
                 String role = jwtTokenProvider.getRole(token); // "STUDENT" 또는 "EXPERT"
 
                 // 인증 객체 생성
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                nickname,
+                                memberId,
                                 null,
                                 List.of(new SimpleGrantedAuthority(role))
                         );

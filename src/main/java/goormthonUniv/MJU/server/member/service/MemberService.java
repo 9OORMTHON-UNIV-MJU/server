@@ -59,7 +59,7 @@ public class MemberService {
 		}
 
         // AccessToken 생성
-		String accessToken = jwtTokenProvider.generateAccessToken(member.getNickname(), member.getRole());
+		String accessToken = jwtTokenProvider.generateAccessToken(member.getMemberId(), member.getRole());
 
 		// 응답 DTO 반환
         return LoginResponse.builder()
