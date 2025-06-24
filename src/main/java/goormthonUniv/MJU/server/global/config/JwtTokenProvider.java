@@ -31,13 +31,13 @@ public class JwtTokenProvider {
 	}
 	
 	// AccessToken 생성 (닉네임 + 역할 포함)
-	public String generateAccessToken(String nickname, String role) {
-        return generateToken(nickname, role, accessTokenValidTime);
+	public String generateAccessToken(Long memberId, String role) {
+        return generateToken(memberId, role, accessTokenValidTime);
     }
 
     // 토큰 생성
-    private String generateToken(String nickname, String role, long expireTime) {
-        Claims claims = Jwts.claims().setSubject(nickname);
+    private String generateToken(Long memberId, String role, long expireTime) {
+    	Claims claims = Jwts.claims().setSubject(String.valueOf(memberId));
         if (role != null && !role.isEmpty()) {
             claims.put("role", role);
         }
@@ -51,10 +51,15 @@ public class JwtTokenProvider {
                 .compact();
     }
 	
-	// 토큰에서 닉네임 추출
-	public String getNickname(String token) {
-		return getAllClaims(token).getSubject();
-	}
+	// 토큰에서 memberId 추출
+    public Long getMemberId(String token) {
+        try {
+            Claims claims = getAllClaims(token);
+            return Long.valueOf(claims.getSubject());
+        } catch (Exception e) {
+            return null;
+        }
+    }
 	
 	// 토큰에서 단일 권한(role) 추출
     public String getRole(String token) {

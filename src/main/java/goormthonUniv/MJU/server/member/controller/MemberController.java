@@ -1,4 +1,4 @@
-package goormthonUniv.MJU.server.member;
+package goormthonUniv.MJU.server.member.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import goormthonUniv.MJU.server.member.dto.LoginRequest;
 import goormthonUniv.MJU.server.member.dto.LoginResponse;
 import goormthonUniv.MJU.server.member.dto.RegisterRequest;
+import goormthonUniv.MJU.server.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
