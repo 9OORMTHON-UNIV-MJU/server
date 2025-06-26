@@ -7,6 +7,7 @@ import goormthonUniv.MJU.server.Article.controller.dto.ArticleResponses;
 import goormthonUniv.MJU.server.Article.domain.Article;
 import goormthonUniv.MJU.server.Article.domain.Image;
 import goormthonUniv.MJU.server.Article.service.ArticleService;
+import goormthonUniv.MJU.server.global.resolver.annotation.Auth;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,21 +15,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class ArticleController {
 
     private final ArticleService articleService;
 
-    @PostMapping("/articles/{memberId}")
+    @PostMapping("/articles")
     public ResponseEntity<Void> createArticle(
             @RequestPart("article") ArticleRequest request,
             @RequestPart(value = "images", required = false) List<MultipartFile> images,
-            @PathVariable Long memberId
+            @Auth Long memberId
     ) {
         articleService.createArticle(memberId, request, images);
 

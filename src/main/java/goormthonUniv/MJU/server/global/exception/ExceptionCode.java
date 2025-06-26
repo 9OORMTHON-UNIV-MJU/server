@@ -12,8 +12,10 @@ public enum ExceptionCode {
     // 회원가입 관련 예외 추가
     DUPLICATE_NICKNAME(409, "닉네임 중복"),
     
-    UNKNOWN_EXCEPTION_OCCURRED(500, "서버 관련 예외")
-    ;
+    UNKNOWN_EXCEPTION_OCCURRED(500, "서버 관련 예외"),
+
+    // resolver 예외 추가
+    NOT_FOUND_TOKEN(404, "토큰을 찾을 수 없습니다.");
 
     private final int status;
     private final String message;
